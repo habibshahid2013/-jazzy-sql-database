@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const songRouter = require('./routes/song.router')
+const artistRouter = require('./routes/artist.router')
 
 const app = express();
 const PORT = 5000;
@@ -11,7 +12,10 @@ app.use(express.static('server/public'));
 
 //Tell my express app
 //to use my bookRouter "mini app"
-app.use('/', songRouter)
+//My song mini app 
+//lives inside the /book url
+app.use('/song', songRouter)
+app.use('/artist', artistRouter)
 
 app.listen(PORT, () => {
     console.log('listening on port', PORT)
@@ -54,13 +58,4 @@ const songList = [
     }
 ];
 
-app.get('/artist', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(artistList);
-});
-
-app.post('/artist', (req, res) => {
-    artistList.push(req.body);
-    res.sendStatus(201);
-});
 
